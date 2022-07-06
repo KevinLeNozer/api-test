@@ -1,6 +1,7 @@
 package org.example;
 
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -13,23 +14,22 @@ import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 public class Main {
-
     private static final HttpClient httpClient = HttpClient.newBuilder()
             .version(HttpClient.Version.HTTP_2)
             .connectTimeout(Duration.ofSeconds(10))
             .build();
-
+    private static final String URL = "https://kitsu.io/api/edge/anime?filter[text]=";
     public static void main(String[] args) throws ExecutionException, InterruptedException, TimeoutException {
-
-
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Rentre le nom d'un mangas");
-        String nomMangas = sc.nextLine();
+        String nomMangas = "";
+        nomMangas = sc.next();
+        sc.close();
 
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
-                .uri(URI.create("https://kitsu.io/api/edge/anime?filter[text]=" + nomMangas))
+                .uri(URI.create(URL + nomMangas))
                 .setHeader("User-Agent",  "Java 11 HttpClient Bot")
                 .build();
 
